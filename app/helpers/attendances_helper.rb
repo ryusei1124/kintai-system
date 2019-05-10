@@ -32,9 +32,11 @@ module AttendancesHelper
         next
       elsif item[:started_at].blank? || item[:finished_at].blank?
         attendances = false
+        flash[:danger] = "出社時間または退社時間を入力してください。"
         break
       elsif item[:started_at] > item[:finished_at]
         attendances = false
+        flash[:danger] = "出社時間を退社時間より遅い時間に設定することはできません。"
         break
       end
     end
