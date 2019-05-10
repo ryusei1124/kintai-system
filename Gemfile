@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'ransack'
 gem 'rails-i18n'
 gem 'rails',        '5.1.6'
 gem 'bcrypt',         '3.1.12'
