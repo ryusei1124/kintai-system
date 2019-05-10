@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'rounding'
 gem 'ransack'
 gem 'rails-i18n'
 gem 'rails',        '5.1.6'
