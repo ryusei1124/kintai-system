@@ -1,4 +1,6 @@
 class AttendancesController < ApplicationController
+  before_action :correct_user,   only: [:edit]
+  
   def create
     @user = User.find(params[:user_id])
     @attendance = @user.attendances.find_by(worked_on: Date.today)
@@ -38,5 +40,13 @@ class AttendancesController < ApplicationController
   private
     def attendances_params
       params.permit(attendances: [:started_at, :finished_at, :note])[:attendances]
+    end
+    
+    # 正しいユーザーかどうか確認
+    def correct_user
+      @user = User.find(params[:id])
+      if !current_user?(@user)
+        redirect_to(root_url)
+      end
     end
 end
