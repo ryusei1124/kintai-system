@@ -83,9 +83,9 @@
     </tbody>
     <tfoot>
       <tr>
-        <td colspan = "2"><%= format_basic_time(@user.basic_time).to_f * @worked_sum %></td>
+        <td colspan = "2">総合勤務時間 : <%= format_basic_time(@user.basic_time).to_f * @worked_sum %></td>
         <td colspan = "6"></td>
-        <td><%= working_times_sum(@total_seconds) unless @total_seconds.nil? %></td>
+        <td>在社時間合計 : <%= working_times_sum(@total_seconds) unless @total_seconds.nil? %></td>
         <td></td>
       </tr>
     </tfoot>
