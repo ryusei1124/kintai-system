@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
-  before_action :correct_user,   only: [:edit, :update, :show]
-  before_action :admin_user,     only: [:destroy, :edit_basic_info, :update_basic_info, :index]
+  before_action :logged_in_user,  only: [:index, :edit, :update, :destroy, :show]
+  before_action :correct_user,    only: [:edit, :update]
+  before_action :admin_user,      only: [:destroy, :edit_basic_info, :update_basic_info, :index]
+  before_action :general_user,    only: :show
 
   def index
     if params[:q] && params[:q].reject { |key, value| value.blank? }.present?
@@ -116,5 +117,10 @@ class UsersController < ApplicationController
       params.require(:q).permit(:name_cont)
     end
     
-    
+    def general_user
+      @user = User.find(params[:id])
+      if !current_user.admin? && !current_user?(@user)
+        redirect_to(root_url)
+      end
+    end
 end
