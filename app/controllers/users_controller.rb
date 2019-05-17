@@ -116,7 +116,8 @@ class UsersController < ApplicationController
     def search_params
       params.require(:q).permit(:name_cont)
     end
-    
+
+    #一般ユーザーで他のユーザーのURLを指定しても開けないようにする
     def general_user
       @user = User.find(params[:id])
       if !current_user.admin? && !current_user?(@user)
