@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   before_action :correct_user,    only: [:edit, :update]
   before_action :admin_user,      only: [:destroy, :edit_basic_info, :update_basic_info, :index]
   before_action :general_user,    only: :show
+  before_action :hidden,          only: :show
 
   def index
     if params[:q] && params[:q].reject { |key, value| value.blank? }.present?
@@ -122,6 +123,12 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
       if !current_user.admin? && !current_user?(@user)
         redirect_to(root_url)
+      end
+    end
+    
+    def hidden
+      if current_user.admin?
+        redirect_to root_url
       end
     end
 end
