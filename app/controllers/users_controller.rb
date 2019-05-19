@@ -126,6 +126,7 @@ class UsersController < ApplicationController
       end
     end
     
+    #管理者の勤怠画面の非表示及び編集NG
     def hidden
       if current_user.admin?
         redirect_to root_url
