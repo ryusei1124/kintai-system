@@ -20,13 +20,7 @@
               アカウント<b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-<<<<<<< HEAD
               <li><%= link_to "勤怠表示画面へ", current_user %></li>
-=======
-              <% if !current_user.admin? %>
-                <li><%= link_to "ユーザー勤怠情報表示", current_user %></li>
-              <% end %>
->>>>>>> 4a8cf50eceb8beb5e6f55726b23ebb104760093a
               <li><%= link_to "設定", edit_user_path(current_user) %></li>
               <li class="divider"></li>
               <li>
