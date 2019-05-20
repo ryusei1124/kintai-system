@@ -1,7 +1,7 @@
 class AttendancesController < ApplicationController
   before_action :logged_in_user,  only: :edit
   before_action :general_user, only: :edit
-  before_action :hidden,          only: :edit
+  
   
   def create
     @user = User.find(params[:user_id])
@@ -61,9 +61,5 @@ class AttendancesController < ApplicationController
       end
     end
     
-    def hidden
-      if current_user.admin?
-        redirect_to root_url
-      end
-    end
+    
 end
