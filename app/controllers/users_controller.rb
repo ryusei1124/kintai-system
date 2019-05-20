@@ -3,7 +3,6 @@ class UsersController < ApplicationController
   before_action :correct_user,    only: [:edit, :update]
   before_action :admin_user,      only: [:destroy, :edit_basic_info, :update_basic_info, :index]
   before_action :general_user,    only: :show
-  before_action :hidden,          only: :show
 
   def index
     if params[:q] && params[:q].reject { |key, value| value.blank? }.present?
@@ -85,7 +84,7 @@ class UsersController < ApplicationController
     end
     
     def basic_info_params
-      params.require(:user).permit(:basic_time, :work_start_time, :work_end_time)
+      params.require(:user).permit(:basic_time, :work_time)
     end
 
     # beforeアクション
@@ -125,11 +124,5 @@ class UsersController < ApplicationController
         redirect_to(root_url)
       end
     end
-    
-    #管理者の勤怠画面の非表示及び編集NG
-    def hidden
-      if current_user.admin?
-        redirect_to root_url
-      end
-    end
+  
 end

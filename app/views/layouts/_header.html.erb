@@ -20,9 +20,13 @@
               アカウント<b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
+<<<<<<< HEAD
               <% if !current_user.admin? %>
                 <li><%= link_to "ユーザー勤怠情報表示", current_user %></li>
               <% end %>
+=======
+              <li><%= link_to "勤怠画面へ", current_user %></li>
+>>>>>>> intern
               <li><%= link_to "設定", edit_user_path(current_user) %></li>
               <li class="divider"></li>
               <li>
