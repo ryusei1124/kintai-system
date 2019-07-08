@@ -28,6 +28,12 @@ class UsersController < ApplicationController
     end
     @dates = user_attendances_month_date
     @worked_sum = @dates.where.not(started_at: nil).count
+    respond_to do |format|
+      format.html
+      format.csv do
+        send_data render_to_string, filename: "#{@user.name}.csv", type: :csv
+      end
+    end
   end
 
   def new

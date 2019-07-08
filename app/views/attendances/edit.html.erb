@@ -37,7 +37,7 @@
               </td>
               <td>
                 <% unless day.worked_on > Date.today %>
-                  <%= af.check_box 'tomorrow', {}, "true", "false" %>
+                  <%= af.check_box :tomorrow, {}, "true", "false" %>
                 <% end %> 
               </td>
               <td>
