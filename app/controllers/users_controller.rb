@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :correct_user,    only: [:edit, :update]
   before_action :admin_user,      only: [:destroy, :edit_basic_info, :update_basic_info, :index]
   before_action :general_user,    only: :show
-  
+  before_action :hidden,          only: :show
 
   def index
     if params[:q] && params[:q].reject { |key, value| value.blank? }.present?
@@ -63,19 +63,19 @@ class UsersController < ApplicationController
     redirect_to users_url
   end
   
-  def edit_basic_info
-    @user = User.find(params[:id])
-  end
+  #def edit_basic_info
+  #  @user = User.find(params[:id])
+  #end
   
-  def update_basic_info
-    @user = User.find(params[:id])
-    if @user.update_attributes(basic_info_params)
-      flash[:success] = "基本情報を更新しました。"
-      redirect_to @user   
-    else
-      render 'edit_basic_info'
-    end
-  end
+  #def update_basic_info
+  #  @user = User.find(params[:id])
+  #  if @user.update_attributes(basic_info_params)
+  #    flash[:success] = "基本情報を更新しました。"
+  #    redirect_to @user   
+  #  else
+  #    render 'edit_basic_info'
+  #  end
+  #end
 
 
   private
@@ -126,5 +126,10 @@ class UsersController < ApplicationController
       end
     end
     
-    
+    #管理者は勤怠画面の表示禁止
+    def hidden
+      if current_user.admin?
+        redirect_to(root_url)
+      end
+    end
 end

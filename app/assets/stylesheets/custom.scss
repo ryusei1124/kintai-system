@@ -163,6 +163,16 @@ input, textarea, select, .uneditable-input {
   }
 }
 
+/* ユーザー一覧編集 */
+.panel{
+  margin-top: 4px;
+  background-color: #eaeaea;
+  border: 7px solid #eaeaea;
+  &:hover{
+    border: 7px solid #eaeaea;
+  }
+}
+
 .table-bordered{
   margin: 10px 0;
 }
@@ -188,3 +198,4 @@ input, textarea, select, .uneditable-input {
   font-size: 20px;
   text-align: center;
 }
+
