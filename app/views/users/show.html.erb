@@ -19,7 +19,7 @@
     <tr>
       <td>所属 : <%= @user.department.present? ? @user.department : "未設定" %></td>
       <td>氏名 : <%= @user.name %></td>
-      <td>コード : <%#= @user.employee_number.present? ? @user.employee_number : "未設定" %></td>
+      <td>コード : <%= @user.employee_number.present? ? @user.employee_number : "未設定" %></td>
       <td>出勤日数 : <%= @worked_sum %>日</td>
       <td>締日 : <%= @last_day.to_s(:date) %></td>
     </tr>
