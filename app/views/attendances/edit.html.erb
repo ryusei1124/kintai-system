@@ -50,7 +50,14 @@
                 <% if day.worked_on > Date.today %>
                   
                 <% else %>
-                  
+                  <div class="form-group">
+                    <div class="col-sm-14">
+                      <select class="form-control">
+                        <option></option>
+                        <option>上長A</option>        
+                      </select>
+                    </div>
+                  </div>
                 <% end %>
               </td>
             </tr>

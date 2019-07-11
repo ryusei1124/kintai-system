@@ -77,6 +77,24 @@ p {
   }
 }
 
+.superior{
+  color: #FF0;
+}
+
+.user{
+  color: #33FFCC;
+}
+
+.admin{
+  color: #F00;
+}
+
+.header-name{
+  float: left;
+  font-size: 15px;
+  margin-top: 15px;
+}
+
 /* various */
 
 .debug_dump {
@@ -197,5 +215,10 @@ input, textarea, select, .uneditable-input {
   color: black;
   font-size: 20px;
   text-align: center;
+}
+
+/* 上長ユーザー */
+.link{
+  font-size: 15px;
 }
 

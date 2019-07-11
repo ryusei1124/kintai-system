@@ -24,6 +24,12 @@
       <td>締日 : <%= @last_day.to_s(:date) %></td>
     </tr>
   </table>
+  
+  <% if current_user.superior? %>
+    <%= link_to "【残業申請のお知らせ】", "#", class: "link" %><br>
+    <%= link_to "【勤怠変更申請のおしらせ】", "#", class: "link" %><br>
+    <%= link_to "【所属長承認申請のお知らせ】", "#", class: "link" %><br>
+  <% end %>
 
   <%= link_to "勤怠を編集", edit_attendances_path(@user, @first_day), class: "btn btn-primary" %>
   <%= link_to "CSV出力", user_path(format: :csv), class: "btn btn-primary" %>
@@ -71,7 +77,54 @@
           end
         %>
         <tr>
-          <td><%= link_to "残業申請", "#", class: "btn btn-primary" %></td>
+          <td>
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#<%= day.worked_on %>">残業申請</button>
+            <div class="modal fade" id="<%= day.worked_on %>" tabindex="-1">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                      <h4 class="modal-title">【残業申請】</h4>
+                    </div>
+                    <div class="modal-body">
+                      <table class="table-bordered table-striped table-condensed">
+                        <tr>
+                          <td>日付</td>
+                          <td>曜日</td>
+                          <td>残業終了予定時間</td>
+                          <td>翌日</td>
+                          <td>業務処理内容</td>
+                          <td>指示者確認</td>
+                        </tr>
+                        <tr>
+                          <!--data-dateから取得した日付と曜日を設定-->
+                          <td><%= day.worked_on.to_s(:date) %></td>
+                          
+                          <!-- data-hidden_dateで取得した値を、コントローラーに飛ばす -->
+                          <td class="<%= css_class %>"><%= %w{日 月 火 水 木 金 土}[day.worked_on.wday] %></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td>
+                            <div class="col-sm-14">
+                              <select class="form-control">
+                                <option></option>
+                                <option>上長A</option>        
+                              </select>
+                            </div>
+                          </td>
+                        </tr>
+                      </table>
+                      <div class="modal-footer">
+                        <%= link_to "申請する", "", class: "btn btn-primary" %>
+                        <%#= f.submit "残業申請する", class: "btn btn-primary" %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
           <td><%= day.worked_on.to_s(:date) %></td>
           <td class="<%= css_class %>"><%= %w{日 月 火 水 木 金 土}[day.worked_on.wday] %></td>
           <td><%= day.started_at.to_s(:hour) if day.started_at.present? %></td>
@@ -111,7 +164,7 @@
         <td>在社時間合計 : <%= working_times_sum(@total_seconds) unless @total_seconds.nil? %></td>
         <td></td>
         <td colspan = "5"></td>
-        <td>所属長承認  未<br><%= link_to "申請", "#", class: "btn btn-primary" %></td>
+        <td>所属長承認<br><%= link_to "申請", "#", class: "btn btn-primary" %></td>
       </tr>
     </tfoot>
   </table>

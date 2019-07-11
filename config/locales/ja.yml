@@ -6,6 +6,7 @@ ja:
           email: メールアドレス
           password: パスワード
           password_confirmation: パスワード確認
+          department: 所属
   users:
     form:
       name: 名前
