@@ -1,0 +1,27 @@
+<a class="cursor" data-toggle="modal" data-target="#department_request">【所属長承認申請のお知らせ】</a>
+  <div class="modal fade" id="department_request" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-body">
+          <%#= form_for() do |f| %>
+            <div><%= link_to "更新", "", class: "btn btn-primary"%></div>
+            <div>【<%= @user.name %>からの残業申請】</div>
+            <table class="table-bordered table-striped table-condensed">
+              <tr>
+                <td>日付</td>
+                <td>曜日</td>
+                <td>終了予定時間</td>
+                <td>指定勤務終了時間</td>
+                <td>時間外勤務</td>
+                <td>業務処理内容</td>
+                <td>指示者確認印</td>
+                <td>変更</td>
+                <td>勤怠を確認する</td>
+              </tr>
+              <tr></tr>
+            </table>
+          <%# end %>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,33 @@
+<a class="cursor" data-toggle="modal" data-target="#attendance_change">【勤怠変更申請のおしらせ】</a>
+  <div class="modal fade" id="attendance_change" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-body">
+          <%#= form_for() do |f| %>
+            <div><%= link_to "更新", "", class: "btn btn-primary"%></div>
+            <div>【<%= @user.name %>からの残業申請】</div>
+            <table class="table-bordered table-striped table-condensed">
+              <tr>
+                <th rowspan = "2">日付</th>
+                <th rowspan = "2">曜日</th>
+                <th colspan = "2">変更前</th>
+                <th colspan = "2">変更後</th>
+                <th rowspan = "2">備考</th>
+                <th rowspan = "2">指示者確認印</th>
+                <th rowspan = "2">変更</th>
+                <th rowspan = "2">勤怠を確認する</th>
+              </tr>
+              <tr>
+                
+                <th>出社</th>
+                <th>退社</th>
+                <th>出社</th>
+                <th>退社</th>
+                
+              </tr>
+            </table>
+          <%# end %>
+        </div>
+      </div>
+    </div>
+  </div>

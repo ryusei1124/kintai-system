@@ -127,15 +127,11 @@ class UsersController < ApplicationController
     #一般ユーザーで他のユーザーのURLを指定しても開けないようにする
     def general_user
       @user = User.find(params[:id])
-      if !current_user.admin? && !current_user?(@user)
-        redirect_to(root_url)
-      end
+      redirect_to(root_url) if !current_user.admin? && !current_user?(@user)
     end
     
     #管理者は勤怠画面の表示禁止
     def hidden
-      if current_user.admin?
-        redirect_to(root_url)
-      end
+      redirect_to(root_url) if current_user.admin?
     end
 end
