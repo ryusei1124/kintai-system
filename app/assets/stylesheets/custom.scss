@@ -182,13 +182,12 @@ input, textarea, select, .uneditable-input {
 }
 
 /* ユーザー一覧編集 */
-.panel{
-  margin-top: 4px;
-  background-color: #eaeaea;
-  border: 7px solid #eaeaea;
-  &:hover{
-    border: 7px solid #eaeaea;
-  }
+.userslist {
+  padding: 10px;
+  margin-bottom: 10px;
+  color: inherit;
+  background-color: #ecf0f1;
+  border-radius: 4px;
 }
 
 .table-bordered{

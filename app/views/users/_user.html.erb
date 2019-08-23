@@ -1,46 +1,34 @@
-<li>
-  <%= user.name %>
-  <% if current_user.admin? && !current_user?(user) %><br>
-    ｜<%= link_to "削除", user, method: :delete, data: { confirm: "削除してよろしいですか？" },class: "btn btn-primary" %><br>
-    <div class="panel panel-default">
-      <a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">編集</a>
-    </div>
-    <div class="collapse" id="collapseExample">
-      <div class="panel-body">
-        test
-        <%#= form_for(@user, url: {controler: "users", action: "edit_index" }) do |f| %>
-          <%#= render 'shared/error_messages', object: @user %>
-              
-          <%#= f.label :名前 %>
-          <%#= f.text_field :name, class: 'form-control' %>
+<%= form_with(model: user, url: update_basic_info_user_path(user), local: true, method: :patch) do |f| %>
 
-          <%#= f.label :メールアドレス %>
-          <%#= f.email_field :email, class: 'form-control' %>
+  <%= f.label :name %>
+  <%= f.text_field :name, class: 'form-control' %>
 
-          <%#= f.label :所属 %>
-          <%#= f.text_field :department, class: 'form-control' %>
-      
-          <%#= f.label :社員番号 %>
-          <%#= f.text_field :employee_number, class: 'form-control' %>
+  <%= f.label :email %>
+  <%= f.email_field :email, class: 'form-control' %>
 
-          <%#= f.label :カードid %>
-          <%#= f.text_field :card_id, class: 'form-control' %>
+  <%= f.label :department %>
+  <%= f.text_field :department, class: 'form-control' %>
+  
+  <%= f.label :uid %>
+  <%= f.text_field :uid, class: 'form-control' %>
+  
+  <%= f.label :employee_number %>
+  <%= f.text_field :employee_number, class: 'form-control' %>
+  
+  <%= f.label :basic_time %>
+  <%= f.time_field :basic_time, class: 'form-control' %>
+  
+  <%= f.label :work_time %>
+  <%= f.time_field :work_time, class: 'form-control' %>
+  
+  <%= f.label :work_end_time %>
+  <%= f.time_field :work_end_time, class: 'form-control' %>
 
-          <%#= f.label :パスワード %>
-          <%#= f.password_field :password, class: 'form-control' %>
+  <%= f.label :password %>
+  <%= f.password_field :password, class: 'form-control' %>
 
-          <%#= f.label :基本勤務時間 %>
-          <%#= f.time_field :basic_time, class: 'form-control' %>
-      
-          <%#= f.label :指定勤務開始時間 %>
-          <%#= f.time_field :work_time, class: 'form-control' %>
-          
-          <%#= f.label :指定勤務終了時間 %>
-          <%#= f.time_field :work_end_time, class: 'form-control' %>
-
-          <%#= f.submit "更新する", class: "btn btn-primary" %>
-        <%# end %>
-      </div>
-    </div>
-  <% end %>
-</li>
+  <%= f.label :password_confirmation %>
+  <%= f.password_field :password_confirmation, class: 'form-control' %>
+  
+  <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+<% end %>

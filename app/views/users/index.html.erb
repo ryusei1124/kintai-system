@@ -1,17 +1,36 @@
 <% provide(:title, @title) %>
+<% provide(:button_text, '更新') %>
+
 <h1><%= @title %></h1>
 
-<div class="row">
-  <div class="search_form">
-    <%= render 'users/search_form' %>
-  </div>
+
+<div class="search_form">
+  <%= render 'users/search_form' %>
 </div>
+
 
 <%= will_paginate %>
 
 <% unless @users.empty? %>
   <ul class="users">
-    <%= render @users %>
+    <li>
+      <% @users.each do |user| %>
+        <%= user.name %>
+        <% if current_user.admin? %><br>
+          <% if !current_user?(user) %>
+           | <%= link_to "削除", user, method: :delete, data: { confirm: "削除してよろしいですか？" },class: "btn btn-primary" %><br>
+          <% end %>
+          <div class="userslist">
+            <a class="btn btn-primary" data-toggle="collapse" href="#collapse<%= user.id %>">編集</a>
+            <div class="collapse" id="collapse<%= user.id %>">
+              <div class="panel-body">
+                <%= render "user",user: user %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </li>
   </ul>
 <% else %>
   <p class="search">

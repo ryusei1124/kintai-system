@@ -69,29 +69,25 @@ class UsersController < ApplicationController
     redirect_to users_url
   end
   
-  #def edit_basic_info
-  #  @user = User.find(params[:id])
-  #end
-  
-  #def update_basic_info
-  #  @user = User.find(params[:id])
-  #  if @user.update_attributes(basic_info_params)
-  #    flash[:success] = "基本情報を更新しました。"
-  #    redirect_to @user   
-  #  else
-  #    render 'edit_basic_info'
-  #  end
-  #end
+  def update_basic_info
+    @user = User.find(params[:id])
+    if @user.update_attributes(basic_info_params)
+      flash[:success] = "#{@user.name}さんの基本情報を更新しました。"
+    else
+      flash[:danger] = "#{@user.name_was}さんの更新は失敗しました。<br>" + @user.errors.full_messages.join("<br>")
+    end
+    redirect_to users_url
+  end
 
 
   private
 
     def user_params
-      params.require(:user).permit(:name, :email, :department, :employee_number, :uid, :password, :password_confirmation)
+      params.require(:user).permit(:name, :email, :department, :password, :password_confirmation)
     end
     
     def basic_info_params
-      params.require(:user).permit(:basic_time, :work_start_time)
+      params.require(:user).permit(:name, :email, :department, :uid, :employee_number, :password, :password_confirmation, :basic_time, :work_time, :work_end_time)
     end
 
     # beforeアクション
