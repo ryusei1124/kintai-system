@@ -47,9 +47,7 @@ class AttendancesController < ApplicationController
     # ログインしていない一般ユーザーは勤怠編集画面を開けない
     def general_user
       @user = User.find(params[:id])
-      if !current_user?(@user) && !current_user.admin?
-        redirect_to(root_url)
-      end
+      redirect_to(root_url) if !current_user.admin? && !current_user?(@user)
     end
     
     # ログイン済みユーザーか確認
@@ -60,6 +58,4 @@ class AttendancesController < ApplicationController
         redirect_to login_url
       end
     end
-    
-    
 end

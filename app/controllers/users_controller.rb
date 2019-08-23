@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   before_action :correct_user,    only: [:edit, :update]
   before_action :admin_user,      only: [:destroy, :edit_basic_info, :update_basic_info, :index]
   before_action :general_user,    only: :show
+  before_action :hidden,          only: :show
 
   def index
     if params[:q] && params[:q].reject { |key, value| value.blank? }.present?
@@ -27,6 +28,12 @@ class UsersController < ApplicationController
     end
     @dates = user_attendances_month_date
     @worked_sum = @dates.where.not(started_at: nil).count
+    respond_to do |format|
+      format.html
+      format.csv do
+        send_data render_to_string, filename: "#{@user.name}.csv", type: :csv
+      end
+    end
   end
 
   def new
@@ -62,18 +69,14 @@ class UsersController < ApplicationController
     redirect_to users_url
   end
   
-  def edit_basic_info
-    @user = User.find(params[:id])
-  end
-  
   def update_basic_info
     @user = User.find(params[:id])
     if @user.update_attributes(basic_info_params)
-      flash[:success] = "基本情報を更新しました。"
-      redirect_to @user   
+      flash[:success] = "#{@user.name}さんの基本情報を更新しました。"
     else
-      render 'edit_basic_info'
+      flash[:danger] = "#{@user.name_was}さんの更新は失敗しました。<br>" + @user.errors.full_messages.join("<br>")
     end
+    redirect_to users_url
   end
 
 
@@ -84,7 +87,7 @@ class UsersController < ApplicationController
     end
     
     def basic_info_params
-      params.require(:user).permit(:basic_time, :work_start_time)
+      params.require(:user).permit(:name, :email, :department, :uid, :employee_number, :password, :password_confirmation, :basic_time, :work_time, :work_end_time)
     end
 
     # beforeアクション
@@ -120,9 +123,11 @@ class UsersController < ApplicationController
     #一般ユーザーで他のユーザーのURLを指定しても開けないようにする
     def general_user
       @user = User.find(params[:id])
-      if !current_user.admin? && !current_user?(@user)
-        redirect_to(root_url)
-      end
+      redirect_to(root_url) if !current_user.admin? && !current_user?(@user)
     end
-
+    
+    #管理者は勤怠画面の表示禁止
+    def hidden
+      redirect_to(root_url) if current_user.admin?
+    end
 end

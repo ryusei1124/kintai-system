@@ -1,7 +1,34 @@
-<li>
-  <%= link_to user.name, user %>
-  <% if current_user.admin? && !current_user?(user) %>
-    ｜<%= link_to "基本情報編集", basic_info_path(user) %>
-    ｜<%= link_to "削除", user, method: :delete, data: { confirm: "削除してよろしいですか？" } %>
-  <% end %>
-</li>
+<%= form_with(model: user, url: update_basic_info_user_path(user), local: true, method: :patch) do |f| %>
+
+  <%= f.label :name %>
+  <%= f.text_field :name, class: 'form-control' %>
+
+  <%= f.label :email %>
+  <%= f.email_field :email, class: 'form-control' %>
+
+  <%= f.label :department %>
+  <%= f.text_field :department, class: 'form-control' %>
+  
+  <%= f.label :uid %>
+  <%= f.text_field :uid, class: 'form-control' %>
+  
+  <%= f.label :employee_number %>
+  <%= f.text_field :employee_number, class: 'form-control' %>
+  
+  <%= f.label :basic_time %>
+  <%= f.time_field :basic_time, class: 'form-control' %>
+  
+  <%= f.label :work_time %>
+  <%= f.time_field :work_time, class: 'form-control' %>
+  
+  <%= f.label :work_end_time %>
+  <%= f.time_field :work_end_time, class: 'form-control' %>
+
+  <%= f.label :password %>
+  <%= f.password_field :password, class: 'form-control' %>
+
+  <%= f.label :password_confirmation %>
+  <%= f.password_field :password_confirmation, class: 'form-control' %>
+  
+  <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+<% end %>

@@ -77,6 +77,24 @@ p {
   }
 }
 
+.superior{
+  color: #FF0;
+}
+
+.user{
+  color: #33FFCC;
+}
+
+.admin{
+  color: #F00;
+}
+
+.header-name{
+  float: left;
+  font-size: 15px;
+  margin-top: 15px;
+}
+
 /* various */
 
 .debug_dump {
@@ -163,6 +181,15 @@ input, textarea, select, .uneditable-input {
   }
 }
 
+/* ユーザー一覧編集 */
+.userslist {
+  padding: 10px;
+  margin-bottom: 10px;
+  color: inherit;
+  background-color: #ecf0f1;
+  border-radius: 4px;
+}
+
 .table-bordered{
   margin: 10px 0;
 }
@@ -187,4 +214,24 @@ input, textarea, select, .uneditable-input {
   color: black;
   font-size: 20px;
   text-align: center;
+}
+
+/* 上長ユーザー */
+.link{
+  font-size: 15px;
+}
+
+.work-modal{
+  a{
+    display: block;
+    margin-bottom: 10px;
+  }
+}
+
+.modal{
+  margin: 30px;
+}
+
+.cursor{
+  cursor: pointer;
 }
