@@ -21,7 +21,7 @@
            | <%= link_to "削除", user, method: :delete, data: { confirm: "削除してよろしいですか？" },class: "btn btn-primary" %><br>
           <% end %>
           <div class="userslist">
-            <a class="btn btn-primary" data-toggle="collapse" href="#demo<%= user.id %>">基本情報編集</a>
+            <a class="btn btn-primary" data-toggle="collapse" href="#demo<%= user.id %>">編集</a>
             <div class="collapse" id="demo<%= user.id %>">
               <div class="panel-body">
                 <%= render "user",user: user %>
