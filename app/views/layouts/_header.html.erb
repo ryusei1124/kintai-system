@@ -1,7 +1,7 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
     <%= link_to "勤怠システム", root_path, id: "logo" %>
-    <nav>
+    
       <% if logged_in? %>
         <% if current_user.admin? %>
           <div class="header-name">
@@ -44,6 +44,6 @@
           <li><%= link_to "ログイン", login_path %></li>
         <% end %>
       </ul>
-    </nav>
+    
   </div>
 </header>
