@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     member do
       patch 'update_basic_info'
     end
+    # collection { post :import }
     resources :attendances, only: :create
   end
 end

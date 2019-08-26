@@ -15,6 +15,12 @@ class UsersController < ApplicationController
     end
     @users = @q.result.paginate(page: params[:page])
   end
+  
+  # def import
+  #   # fileはtmpに自動で一時保存される
+  #   User.import(params[:file])
+  #   redirect_to users_url
+  # end
 
   def show
     @user = User.find(params[:id])

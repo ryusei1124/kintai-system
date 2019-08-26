@@ -3,6 +3,10 @@
 
 <h1><%= @title %></h1>
 
+<%#= form_tag import_users_path, multipart: true do %>
+  <%#= file_field_tag :file %>
+  <%#= submit_tag "インポート" %>
+<%# end %>
 
 <div class="search_form">
   <%= render 'users/search_form' %>
