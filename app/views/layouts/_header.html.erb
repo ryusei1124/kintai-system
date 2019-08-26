@@ -2,21 +2,21 @@
   <div class="container">
     <%= link_to "勤怠システム", root_path, id: "logo" %>
     <nav>
-      <% if logged_in? %>
-        <% if current_user.admin? %>
-          <div class="header-name">
-            <div class="admin">Admin</div>
-          </div>
-        <% elsif current_user.superior? %>
-          <div class="header-name">
-            <div class="superior">Superior</div>
-          </div>
-        <% else %>
-          <div class="header-name">
-            <div class="user">User</div>
-          </div>
-        <% end %>
-      <% end %>
+      <!--<%# if logged_in? %>-->
+      <!--  <%# if current_user.admin? %>-->
+      <!--    <div class="header-name">-->
+      <!--      <div class="admin">Admin</div>-->
+      <!--    </div>-->
+      <!--  <%# elsif current_user.superior? %>-->
+      <!--    <div class="header-name">-->
+      <!--      <div class="superior">Superior</div>-->
+      <!--    </div>-->
+      <!--  <%# else %>-->
+      <!--    <div class="header-name">-->
+      <!--      <div class="user">User</div>-->
+      <!--    </div>-->
+      <!--  <%# end %>-->
+      <!--<%# end %>-->
       <ul class="nav navbar-nav navbar-right">
         <li><%= link_to "ホーム", root_path %></li>
         <% if logged_in? %>
