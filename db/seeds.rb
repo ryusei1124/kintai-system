@@ -2,6 +2,9 @@ User.create!(name:  "管理者",
              email: "email@sample.com",
              password:              "password",
              password_confirmation: "password",
+             affiliation: "管理",
+             employee_number: "123",
+             uid: "abc",
              admin: true)
 
 User.create!(name:  "上長A",

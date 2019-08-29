@@ -57,7 +57,7 @@ class UsersController < ApplicationController
   def update
     if @user.update_attributes(user_params)
       flash[:success] = "ユーザー情報を更新しました。"
-      redirect_to @user
+      redirect_to edit_user_url
     else
       render 'edit'
     end
@@ -78,16 +78,27 @@ class UsersController < ApplicationController
     end
     redirect_to users_url
   end
-
+  
+  def import
+    # fileはtmpに自動で一時保存される
+    if params[:file].blank?
+      flash[:danger] = "インポートするCSVファイルを選択してください。"
+      redirect_to users_url
+    else
+      User.import(params[:file])
+      flash[:success] = "CSVファイルをインポートしました。"
+      redirect_to users_url
+    end
+  end
 
   private
 
     def user_params
-      params.require(:user).permit(:name, :email, :department, :password, :password_confirmation)
+      params.require(:user).permit(:name, :email, :affiliation, :password, :password_confirmation)
     end
     
     def basic_info_params
-      params.require(:user).permit(:name, :email, :department, :uid, :employee_number, :password, :password_confirmation, :basic_time, :work_time, :work_end_time)
+      params.require(:user).permit(:name, :email, :affiliation, :uid, :employee_number, :password, :password_confirmation, :basic_work_time, :designated_work_start_time, :designated_work_end_time)
     end
 
     # beforeアクション
