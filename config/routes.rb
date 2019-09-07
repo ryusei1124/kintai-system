@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   patch 'users/:id/attendances/:date/update', to: 'attendances#update', as: :update_attendances
   resources :users do
     collection { post :import }
+    collection { get :on_duty }
     member do
       patch 'update_basic_info'
     end
