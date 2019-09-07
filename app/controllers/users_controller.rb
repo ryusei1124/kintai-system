@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user,  only: [:index, :edit, :update, :destroy, :show]
+  before_action :logged_in_user,  only: [:index, :edit, :update, :destroy, :show, :on_duty]
   before_action :correct_user,    only: [:edit, :update]
-  before_action :admin_user,      only: [:destroy, :edit_basic_info, :update_basic_info, :index]
+  before_action :admin_user,      only: [:destroy, :edit_basic_info, :update_basic_info, :index, :on_duty]
   before_action :general_user,    only: :show
   before_action :hidden,          only: :show
 
@@ -50,7 +50,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       log_in @user
-      flash[:success] = "ユーザーの新規作成に成功しました。"
+      flash[:success] = "#{@user.name}さんを新規作成しました。"
       redirect_to @user
     else
       render 'new'
@@ -62,7 +62,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update_attributes(user_params)
-      flash[:success] = "ユーザー情報を更新しました。"
+      flash[:success] = "#{@user.name}さんの情報を更新しました。"
       redirect_to edit_user_url
     else
       render 'edit'
@@ -70,8 +70,8 @@ class UsersController < ApplicationController
   end
   
   def destroy
-    User.find(params[:id]).destroy
-    flash[:success] = "削除しました。"
+    @user = User.find(params[:id]).destroy
+    flash[:success] = "#{@user.name}さんを削除しました。"
     redirect_to users_url
   end
   
@@ -92,8 +92,24 @@ class UsersController < ApplicationController
       redirect_to users_url
     else
       User.import(params[:file])
-      flash[:success] = "CSVファイルをインポートしました。"
+      flash[:success] = "ユーザーを追加しました。"
       redirect_to users_url
+    end
+  end
+  
+  def on_duty
+    @now_users = []
+    @now_users_employee_number = []
+    User.all.each do |user|
+      if user.attendances.
+       any?{|day|
+         ( day.worked_on == Date.today &&
+           !day.started_at.blank? &&
+           day.finished_at.blank? )
+          }
+        @now_users.push(user.name)
+        @now_users_employee_number.push(user.employee_number)
+      end
     end
   end
 
