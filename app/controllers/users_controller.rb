@@ -95,8 +95,7 @@ class UsersController < ApplicationController
     @now_users = []
     @now_users_employee_number = []
     User.all.each do |user|
-      if user.attendances.
-       any?{|day|
+      if user.attendances.any?{|day|
          ( day.worked_on == Date.today &&
            !day.started_at.blank? &&
            day.finished_at.blank? )
