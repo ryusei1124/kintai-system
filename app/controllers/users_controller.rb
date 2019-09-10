@@ -98,16 +98,15 @@ class UsersController < ApplicationController
   end
   
   def on_duty
-    @now_users = []
-    @now_users_employee_number = []
+    @working_users = []
+    @working_employee_number = []
     User.all.each do |user|
       if user.attendances.any?{|day|
          ( day.worked_on == Date.today &&
            !day.started_at.blank? &&
-           day.finished_at.blank? )
-          }
-        @now_users.push(user.name)
-        @now_users_employee_number.push(user.employee_number)
+           day.finished_at.blank? )}
+        @working_users.push(user.name)
+        @working_employee_number.push(user.employee_number)
       end
     end
   end
