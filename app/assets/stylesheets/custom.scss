@@ -239,3 +239,10 @@ input, textarea, select, .uneditable-input {
 .cursor{
   cursor: pointer;
 }
+
+// 勤務中社員一覧
+#table-users{
+  th, td{
+    text-align: left;
+  }
+}
