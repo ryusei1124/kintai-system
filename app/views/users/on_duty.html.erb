@@ -11,19 +11,17 @@
     </thead>
     
     <tbody>
-      <%= @now_users %>
-      <%= @now_users_employee_number %>
       <% @now_users_employee_number.each do |employee_number| %>
-      <% @now_users.each do |name| %>
-        <tr>
-          <td>
-            <%= employee_number %>
-           </td>
-           <td>
-            <%= name %>
-          </td>
-        </tr>
-      <% end %>
+        <% @now_users.each do |name| %>
+          <tr>
+            <td>
+              <%= employee_number %>
+             </td>
+             <td>
+              <%= name %>
+            </td>
+          </tr>
+        <% end %>
       <% end %>
     </tbody>
   </table>
