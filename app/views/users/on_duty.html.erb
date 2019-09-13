@@ -1,23 +1,29 @@
 <% provide(:title, '出勤中社員一覧') %>
 <h1>出勤中社員一覧</h1>
 
-<div class="col-md-10 col-md-offset-1">
-  <table class="table table-condensed table-hover" id="table-users">
-    <thead>  
-      <tr>
-        <th>社員番号</th>
-        <th>名前</th>
-      </tr>
-    </thead>
-  
-    <tbody>
-      <% ary = [@working_employee_number, @working_users].transpose %>
-      <% ary.each do |key, value| %>
+<% unless @working_users.empty? && @working_employee_number.empty? %>
+  <div class="col-md-10 col-md-offset-1">
+    <table class="table table-condensed table-hover" id="table-users">
+      <thead>  
         <tr>
-          <td><%= key %></td>
-          <td><%= value %></td>
+          <th>社員番号</th>
+          <th>名前</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+      </thead>
+    
+      <tbody>
+        <% ary = [@working_employee_number, @working_users].transpose %>
+        <% ary.each do |key, value| %>
+          <tr>
+            <td><%= key %></td>
+            <td><%= value %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <p class="search">
+    出社している社員はいません。
+  </p>
+<% end %>
