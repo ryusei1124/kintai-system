@@ -9,9 +9,20 @@ module AttendancesHelper
     )
   end
   
-  def working_times(started_at, finished_at)
-    format("%.2f", (((finished_at - started_at) / 60) / 60.0))
+  def working_times(attendance)
+    unless attendance.tomorrow?
+      format("%.2f", (((attendance.finished_at - attendance.started_at) / 60) / 60.0))
+    else
+      format("%.2f", (((attendance.finished_at - attendance.started_at) / 60) / 60.0) + 24) 
+    end
   end
+  # def working_times(started_at, finished_at)
+  #   if params[:tomorrow] == "false"
+  #     format("%.2f", (((finished_at - started_at) / 60) / 60.0))
+  #   else
+  #     format("%.2f", (((finished_at - started_at) / 60) / 60.0) + 24) 
+  #   end
+  # end
   
   def working_times_sum(seconds)
     format("%.2f", seconds / 60 / 60.0)
