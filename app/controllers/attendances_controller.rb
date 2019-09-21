@@ -41,7 +41,7 @@ class AttendancesController < ApplicationController
   
   private
     def attendances_params
-      params.permit(attendances: [:started_at, :finished_at, :note])[:attendances]
+      params.permit(attendances: [:started_at, :finished_at, :note, :tomorrow])[:attendances]
     end
     
     # ログインしていない一般ユーザーは勤怠編集画面を開けない
