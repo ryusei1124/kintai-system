@@ -60,16 +60,6 @@
         <th rowspan = "2">業務内容</th>
         <th rowspan = "2">指示者確認</th>
       </tr>
-      <tr>
-        <th>時</th>
-        <th>分</th>
-        <th></th>
-        <th>時</th>
-        <th>分</th>
-        <th></th>
-        <th>時</th>
-        <th>分</th>
-      </tr>
     </thead>
     <tbody>
       <% @dates.each do |day| %>
@@ -85,6 +75,7 @@
         <tr>
           <td>
             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#<%= day.worked_on %>">残業申請</button>
+            <!--残業申請モーダル表示-->
             <div class="modal fade" id="<%= day.worked_on %>" tabindex="-1">
               <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -93,42 +84,42 @@
                     <h4 class="modal-title">【残業申請】</h4>
                   </div>
                   <div class="modal-body">
-                    <table class="table-bordered table-striped table-condensed">
-                      <tr>
-                        <td>日付</td>
-                        <td>曜日</td>
-                        <td>残業終了予定時間</td>
-                        <td>翌日</td>
-                        <td>業務処理内容</td>
-                        <td>指示者確認</td>
-                      </tr>
-                      <tr>
-                        <!--data-dateから取得した日付と曜日を設定-->
-                        <td><%= day.worked_on.to_s(:date) %></td>
-                          
-                        <!-- data-hidden_dateで取得した値を、コントローラーに飛ばす -->
-                        <td class="<%= css_class %>"><%= %w{日 月 火 水 木 金 土}[day.worked_on.wday] %></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                          <div class="col-sm-14">
-                            <select class="form-control">
-                              <option></option>
-                              <option>上長A</option>        
-                            </select>
-                          </div>
-                        </td>
-                      </tr>
-                    </table>
-                    <div class="modal-footer">
-                      <%= link_to "申請する", "", class: "btn btn-primary" %>
-                      <%#= f.submit "残業申請する", class: "btn btn-primary" %>
-                    </div>
+                    <%= form_with(model: @user, url: update_overtime_path(@user), local: true, method: :patch) do |f| %>
+                      <%= fields_for "attendances[]", day do |af| %>
+                        <table class="table-bordered table-striped table-condensed">
+                          <thead>
+                            <tr>
+                              <td>日付</td>
+                              <td>曜日</td>
+                              <td>残業終了予定時間</td>
+                              <td>翌日</td>
+                              <td>業務処理内容</td>
+                              <td>指示者確認</td>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td><%= day.worked_on.to_s(:date) %></td>
+                              <td class="<%= css_class %>"><%= %w{日 月 火 水 木 金 土}[day.worked_on.wday] %></td>
+                              <td><%= af.time_field :end_overtime, class: "form-control" %></td>
+                              <td style="width:40px;"><%= af.check_box :tomorrow, {}, "true", "false" %></td>
+                              <td><%= af.text_field :business_content, class: "form-control" %></td>
+                              <td><%= af.select :superior_request, [["上長A",1]], {include_blank:'選択してください'}, class: "form-control" %></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <!--cssでinputが100%になっているのでインラインで直接cssを書いている⬇️-->
+                        <%= af.submit "申請", class: "btn btn-primary overtime_request", style: "width:50%;" %>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+                        </div>
+                      <% end %>
+                    <% end %>
                   </div>
                 </div>
               </div>
             </div>
+            <!--残業申請モーダルはここまで⬆️-->
           </td>
           <td><%= day.worked_on.to_s(:date) %></td>
           <td class="<%= css_class %>"><%= %w{日 月 火 水 木 金 土}[day.worked_on.wday] %></td>
@@ -154,22 +145,31 @@
             <% end %>
           </td>
           <td><%= day.note %></td>
+          <td><%= day.end_overtime.to_s(:hour) if day.end_overtime.present? %></td>
+          <td><%= day.end_overtime.to_s(:min) if day.end_overtime.present? %></td>
           <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td><%= day.business_content %></td>
+          <td><%= day.superior_request %></td>
         </tr>
       <% end %>
     </tbody>
     <tfoot>
       <tr>
-        <td colspan = "2">総合勤務時間 : <%= format_basic_time(@user.basic_work_time).to_f * @worked_sum %></td>
-        <td colspan = "6"></td>
+        <td colspan = "9">総合勤務時間 : <%= format_basic_time(@user.basic_work_time).to_f * @worked_sum %></td>
+        
         <td>在社時間合計 : <%= working_times_sum(@total_seconds) unless @total_seconds.nil? %></td>
-        <td></td>
         <td colspan = "5"></td>
-        <td>所属長承認<br><%= link_to "申請", "#", class: "btn btn-primary" %></td>
+        <td>所属長承認：<br>
+          <div class="form-group">
+            <div class="col-sm-14">
+              <select class="form-control">
+                <option></option>
+                <option>上長A</option>        
+              </select>
+            </div>
+          </div>
+          <%= link_to "申請", "#", class: "btn btn-primary" %>
+        </td>
       </tr>
     </tfoot>
   </table>
